@@ -1,18 +1,19 @@
 #!/usr/bin/env python3
-"""RedactingFormatter"""
-import logging
-from typing import Tuple
+"""Connect to secure database"""
+import os
+import mysql.connector
+from mysql.connector import connection
 
-PII_FIELDS: Tuple[str, ...] = ("name", "email", "phone", "ssn", "password")
+def get_db() -> connection.MySQLConnection:
+    """Returns a connector to the database."""
+    user = os.getenv("PERSONAL_DATA_DB_USERNAME", "root")
+    password = os.getenv("PERSONAL_DATA_DB_PASSWORD", "")
+    host = os.getenv("PERSONAL_DATA_DB_HOST", "localhost")
+    db_name = os.getenv("PERSONAL_DATA_DB_NAME")
 
-
-def get_logger() -> logging.Logger:
-    """Returns a logger object."""
-    logger = logging.getLogger("user_data")
-    logger.setLevel(logging.INFO)
-    logger.propagate = False
-    stream_handler = logging.StreamHandler()
-    formatter = RedactingFormatter(fields=PII_FIELDS)
-    stream_handler.setFormatter(formatter)
-    logger.addHandler(stream_handler)
-    return logger
+    return mysql.connector.connect(
+        user=user,
+        password=password,
+        host=host,
+        database=db_name
+    )
