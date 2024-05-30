@@ -11,13 +11,10 @@ class RedactingFormatter(logging.Formatter):
     This class is used to redact specific fields from log records.
     """
 
-    # Redaction string
     REDACTION = "***"
 
-    # Log format
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
 
-    # Field separator
     SEPARATOR = ";"
 
     def __init__(self, fields: List[str]):
@@ -40,7 +37,6 @@ class RedactingFormatter(logging.Formatter):
         Returns:
             str: The formatted log record.
         """
-        # Redact fields from the message
         record.msg = filter_datum(
             self.fields, self.REDACTION, record.msg, self.SEPARATOR
         )
@@ -62,13 +58,10 @@ def filter_datum(
     Returns:
         str: The filtered datum.
     """
-    # Split the datum by the separator
     data = datum.split(separator)
 
-    # Redact specified fields
     for idx, field in enumerate(fields):
         if field in data:
             data[idx] = redaction
 
-    # Join the filtered data back together
     return separator.join(data)
