@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+"""Redacting Formatter class"""
 import logging
 from typing import List
 
