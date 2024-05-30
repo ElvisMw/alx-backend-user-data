@@ -1,24 +1,72 @@
-#!/usr/bin/env python3
-
-"""Module for obfuscating log messages."""
-
-import re
+import logging
 from typing import List
 
 
-def filter_datum(fields: List[str], redaction: str,
-                 message: str, separator: str) -> str:
+class RedactingFormatter(logging.Formatter):
     """
-    Returns the log message obfuscated.
+    Redacting Formatter class.
 
-    :param fields: A list of fields to be obfuscated.
-    :param redaction: The redaction string to replace the obfuscated fields.
-    :param message: The log message to be obfuscated.
-    :param separator: The character used to separate the
-    fields in the log message.
-    :return: The obfuscated log message.
+    This class is used to redact specific fields from log records.
     """
-    pattern = f"({'|'.join(fields)})=[^{separator}]*"
 
-    return re.sub(pattern, lambda x:
-                  x.group().split('=')[0] + '=' + redaction, message)
+    # Redaction string
+    REDACTION = "***"
+
+    # Log format
+    FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
+
+    # Field separator
+    SEPARATOR = ";"
+
+    def __init__(self, fields: List[str]):
+        """
+        Initialize the RedactingFormatter.
+
+        Args:
+            fields (List[str]): List of fields to redact.
+        """
+        super(RedactingFormatter, self).__init__(self.FORMAT)
+        self.fields = fields
+
+    def format(self, record: logging.LogRecord) -> str:
+        """
+        Format the log record to redact PII fields.
+
+        Args:
+            record (logging.LogRecord): The log record to format.
+
+        Returns:
+            str: The formatted log record.
+        """
+        # Redact fields from the message
+        record.msg = filter_datum(
+            self.fields, self.REDACTION, record.msg, self.SEPARATOR
+        )
+        return super(RedactingFormatter, self).format(record)
+
+
+def filter_datum(
+    fields: List[str], redaction: str, datum: str, separator: str
+) -> str:
+    """
+    Filter a datum by redacting specific fields.
+
+    Args:
+        fields (List[str]): List of fields to redact.
+        redaction (str): The string to use for redaction.
+        datum (str): The datum to filter.
+        separator (str): The separator used in the datum.
+
+    Returns:
+        str: The filtered datum.
+    """
+    # Split the datum by the separator
+    data = datum.split(separator)
+
+    # Redact specified fields
+    for idx, field in enumerate(fields):
+        if field in data:
+            data[idx] = redaction
+
+    # Join the filtered data back together
+    return separator.join(data)
