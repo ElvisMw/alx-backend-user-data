@@ -4,6 +4,7 @@ import os
 import mysql.connector
 from mysql.connector import connection
 
+
 def get_db() -> connection.MySQLConnection:
     """Returns a connector to the database."""
     user = os.getenv("PERSONAL_DATA_DB_USERNAME", "root")
