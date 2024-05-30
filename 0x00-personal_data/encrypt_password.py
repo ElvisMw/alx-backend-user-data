@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Returns a hashed password"""
 import bcrypt
 
 
