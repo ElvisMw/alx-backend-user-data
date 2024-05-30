@@ -1,20 +1,20 @@
 #!/usr/bin/env python3
-"""Connect to secure database"""
-import os
-import mysql.connector
-from mysql.connector import connection
+"""Read and filter data"""
 
 
-def get_db() -> connection.MySQLConnection:
-    """Returns a connector to the database."""
-    user = os.getenv("PERSONAL_DATA_DB_USERNAME", "root")
-    password = os.getenv("PERSONAL_DATA_DB_PASSWORD", "")
-    host = os.getenv("PERSONAL_DATA_DB_HOST", "localhost")
-    db_name = os.getenv("PERSONAL_DATA_DB_NAME")
+def main() -> None:
+    """Retrieve and display all rows in the users table."""
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM users;")
+    fields = [i[0] for i in cursor.description]
 
-    return mysql.connector.connect(
-        user=user,
-        password=password,
-        host=host,
-        database=db_name
-    )
+    logger = get_logger()
+
+    for row in cursor:
+        message = "; ".join([f"{field}={value}" for field,
+                             value in zip(fields, row)]) + ";"
+        logger.info(message)
+
+    cursor.close()
+    db.close()
