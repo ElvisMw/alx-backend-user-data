@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
-"""Returns a hashed password"""
-import bcrypt
+"""password validation"""
 
+def is_valid(hashed_password: bytes, password: str) -> bool:
+    """Validates that the provided password matches the hashed password."""
+    return bcrypt.checkpw(password.encode('utf-8'), hashed_password)
 
-def hash_password(password: str) -> bytes:
-    """Returns a hashed password."""
-    return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
