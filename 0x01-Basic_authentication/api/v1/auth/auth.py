@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-""" class to manage the API authentication """
+""" Class to manage the API authentication """
 from flask import request
 from typing import List, TypeVar
+from flask.wrappers import Request
 
 
 class Auth:
@@ -19,7 +20,7 @@ class Auth:
         """
         return False
 
-    def authorization_header(self, request=None) -> str:
+    def authorization_header(self, request: Request = None) -> str:
         """
         Retrieves the authorization header from the request.
 
@@ -31,7 +32,7 @@ class Auth:
         """
         return None
 
-    def current_user(self, request=None) -> TypeVar('User'):
+    def current_user(self, request: Request = None) -> TypeVar('User'):
         """
         Retrieves the current user.
 
