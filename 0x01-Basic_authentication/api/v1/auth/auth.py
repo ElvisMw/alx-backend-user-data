@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """ class to manage the API authentication """
 from flask import request
-from typing import List
+from typing import List, TypeVar
 
 
 class Auth:
@@ -12,10 +12,10 @@ class Auth:
         Args:
             path (str): The path of the endpoint.
             excluded_paths (List[str]): List of paths excluded
-            from authentication
+            from authentication.
 
         Returns:
-            bool: True if authentication is required, False otherwise
+            bool: True if authentication is required, False otherwise.
         """
         return False
 
@@ -31,7 +31,7 @@ class Auth:
         """
         return None
 
-    def current_user(self, request=None):
+    def current_user(self, request=None) -> TypeVar('User'):
         """
         Retrieves the current user.
 
@@ -39,6 +39,6 @@ class Auth:
             request (Request): The Flask request object.
 
         Returns:
-            TypeVar('User'): The current user
+            TypeVar('User'): The current user.
         """
         return None
