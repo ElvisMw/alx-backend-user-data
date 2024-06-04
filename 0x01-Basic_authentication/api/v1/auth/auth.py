@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-""" class to manage the API authentication """
+""" Define which routes don't need authentication """
 from flask import request
 from typing import List, TypeVar
 
-""" Define a type variable for the User class """
+"""Define a type variable for the User class """
 User = TypeVar('User')
 
 
@@ -20,28 +20,19 @@ class Auth:
         Returns:
             bool: True if authentication is required, False otherwise.
         """
-        return False
+        if path is None:
+            return True
 
-    def authorization_header(self, request=None) -> str:
-        """
-        Retrieves the authorization header from the request.
+        if not excluded_paths:
+            return True
 
-        Args:
-            request (Request): The Flask request object.
+        if not path.endswith('/'):
+            path += '/'
 
-        Returns:
-            str: The authorization header.
-        """
-        return None
+        for excluded_path in excluded_paths:
+            if path == excluded_path:
+                return False
+            elif path.startswith(excluded_path):
+                return False
 
-    def current_user(self, request=None) -> User:
-        """
-        Retrieves the current user.
-
-        Args:
-            request (Request): The Flask request object.
-
-        Returns:
-            User: The current user.
-        """
-        return None
+        return True
