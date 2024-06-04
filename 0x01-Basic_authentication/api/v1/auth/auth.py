@@ -7,7 +7,7 @@ from typing import List, TypeVar
 class Auth:
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """
-        Determines if the endpoint requires authentication.
+        Determines if the endpoint requires authentication
 
         Args:
             path (str): The path of the endpoint.
