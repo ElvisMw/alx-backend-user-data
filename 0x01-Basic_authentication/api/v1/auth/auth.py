@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" Define which routes don't need authentication """
+"""Define which routes don't need authentication """
 from flask import request
 from typing import List, TypeVar
 
