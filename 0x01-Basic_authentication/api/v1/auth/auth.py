@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" task 3"""
+""" task 3."""
 from flask import request
 from typing import List, TypeVar
 
