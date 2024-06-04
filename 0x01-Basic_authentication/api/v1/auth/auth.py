@@ -39,6 +39,6 @@ class Auth:
             request (Request): The Flask request object.
 
         Returns:
-            TypeVar('User'): The current user.
+            TypeVar('User'): The current user
         """
         return None
