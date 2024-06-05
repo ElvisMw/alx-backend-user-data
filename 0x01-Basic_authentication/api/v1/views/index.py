@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Contains views related to the index of the API.
+Contains views related to the index of the API
 """
 from flask import jsonify, abort
 from api.v1.views import app_views
