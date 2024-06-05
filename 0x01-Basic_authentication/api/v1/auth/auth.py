@@ -1,8 +1,18 @@
 #!/usr/bin/env python3
+<<<<<<< HEAD
 """Task-Authentication"""
 from flask import request
 from typing import List, TypeVar
 
+=======
+""" task 3."""
+from flask import request
+from typing import List, TypeVar
+
+""" Define a type variable for the User class """
+User = TypeVar('User')
+
+>>>>>>> 04d2dbb053d1c08aa750854fc339fc13efd46040
 
 class Auth:
     """
@@ -22,6 +32,7 @@ class Auth:
         Returns:
             bool: True if the endpoint requires authentication,False otherwise
         """
+<<<<<<< HEAD
         if path is None or excluded_paths is None or excluded_paths == []:
             return True
 
@@ -76,5 +87,30 @@ class Auth:
 
         Returns:
             TypeVar('User'): The user instance or None if the request is None
+=======
+        return False
+
+    def authorization_header(self, request=None) -> str:
+        """
+        Retrieves the authorization header from the request.
+
+        Args:
+            request (Request): The Flask request object.
+
+        Returns:
+            str: The authorization header.
+        """
+        return None
+
+    def current_user(self, request=None) -> User:
+        """
+        Retrieves the current user.
+
+        Args:
+            request (Request): The Flask request object.
+
+        Returns:
+            User: The current user.
+>>>>>>> 04d2dbb053d1c08aa750854fc339fc13efd46040
         """
         return None
