@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 """
 This script starts the Flask application and initializes the necessary
 components for the API.
@@ -7,7 +8,9 @@ components for the API.
 from os import getenv
 from api.v1.views import app_views
 from flask import Flask, jsonify, abort, request
-from flask_cors import CORS
+from flask_cors import (CORS, cross_origin)
+import os
+
 
 app = Flask(__name__)
 """ Flask application instance """
@@ -27,11 +30,13 @@ AUTH_TYPE = getenv("AUTH_TYPE")
 if AUTH_TYPE == "auth":
     from api.v1.auth.auth import Auth
     auth = Auth()
-    """ Initialize the Auth class if authentication type is auth """
+    """ Initialize the Auth class if authentication
+    type is auth """
 elif AUTH_TYPE == "basic_auth":
     from api.v1.auth.basic_auth import BasicAuth
     auth = BasicAuth()
-    """ Initialize the BasicAuth class if authentication type is basic_auth """
+    """ Initialize the BasicAuth class if authentication
+    type is basic_auth """
 
 
 @app.errorhandler(404)
@@ -67,6 +72,7 @@ def before_request() -> str:
     Before request handler.
     Authenticates the request if authentication is enabled.
     """
+
     if auth is None:
         return
 
