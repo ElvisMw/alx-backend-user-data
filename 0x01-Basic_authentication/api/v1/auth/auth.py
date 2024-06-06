@@ -6,6 +6,7 @@ from typing import List, TypeVar
 
 User = TypeVar('User')
 
+
 class Auth:
     """
     Auth class for managing API authentication.
@@ -17,7 +18,8 @@ class Auth:
 
         Args:
             path (str): The path of the endpoint.
-            excluded_paths (List[str]): List of paths excluded from authentication.
+            excluded_paths (List[str]): List of paths excluded
+            from authentication
 
         Returns:
             bool: True if authentication is required, False otherwise.
